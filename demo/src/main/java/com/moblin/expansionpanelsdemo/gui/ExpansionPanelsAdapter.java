@@ -107,6 +107,7 @@ public abstract class ExpansionPanelsAdapter extends RecyclerView.Adapter
         holder.getDetailsContainer().setVisibility(visibility);
         holder.getActionsContainer().setVisibility(visibility);
         holder.getDivider().setVisibility(visibility);
+        holder.getExpandIcon().setSelected(position == mExpandedPosition);
     }
 
     /** Private methods */
