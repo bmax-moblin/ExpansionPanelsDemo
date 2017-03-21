@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">ExpansionPanelsDemo</string>
+    <string name="expand_icon_desc">Expand icon</string>
+    <string name="android_wide_desc">Wide image with text android</string>
+    <string name="action_save">Save</string>
+    <string name="action_cancel">Cancel</string>
+</resources>

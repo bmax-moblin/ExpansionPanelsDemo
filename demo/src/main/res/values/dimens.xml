@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="rv_padding">12dp</dimen>
+    <dimen name="label_text_size">15sp</dimen>
+    <dimen name="expansion_panel_margin">1dp</dimen>
+    <dimen name="expansion_panel_sum_container_mar_end">16dp</dimen>
+    <dimen name="expansion_panel_sum_container_h_collapsed">48dp</dimen>
+    <dimen name="expansion_panel_sum_container_h_expanded">64dp</dimen>
+    <dimen name="expansion_panel_button_horizontal_margin">8dp</dimen>
+    <dimen name="expansion_panel_divider_height">1dp</dimen>
+    <dimen name="expansion_panel_divider_vertical_margin">16dp</dimen>
+    <dimen name="expansion_panel_actions_container_h">36dp</dimen>
+    <dimen name="expansion_panel_containers_m_start">24dp</dimen>
+    <dimen name="expansion_panel_containers_m_end">24dp</dimen>
+    <dimen name="expansion_panel_actions_container_m_bottom">16dp</dimen>
+</resources>
