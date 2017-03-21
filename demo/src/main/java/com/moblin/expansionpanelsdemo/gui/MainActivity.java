@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.moblin.expansionpanelsdemo.R;
+import com.moblin.expansionpanelsdemo.util.Assert;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupGui() {
         RecyclerView rv = lookup(R.id.rv_expandable_panels);
+        Assert.notNull(rv, "View not found: rv_expandable_panels");
         rv.setNestedScrollingEnabled(false);
         rv.setLayoutManager(new LinearLayoutManager(this));
         rv.setAdapter(new TripOptionsAdapter(rv));

@@ -4,6 +4,7 @@ import android.support.annotation.IdRes;
 import android.support.transition.AutoTransition;
 import android.support.transition.Transition;
 import android.support.transition.TransitionManager;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -11,8 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import com.moblin.expansionpanelsdemo.R;
+import com.moblin.expansionpanelsdemo.util.Assert;
 
 /**
  * TODO
@@ -65,6 +68,7 @@ public abstract class ExpansionPanelsAdapter extends RecyclerView.Adapter
                 onCreateViewHolder(parent, viewType, ViewHolderType.ACTIONS);
 
         FrameLayout summaryContainer = lookup(view, R.id.fl_summary_container);
+        Assert.notNull(summaryContainer, "View not found: fl_summary_container");
         FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -72,9 +76,11 @@ public abstract class ExpansionPanelsAdapter extends RecyclerView.Adapter
         summaryContainer.addView(summaryVH.itemView, lp);
 
         FrameLayout detailsContainer = lookup(view, R.id.fl_details_container);
+        Assert.notNull(detailsContainer, "View not found: fl_details_container");
         detailsContainer.addView(detailsVH.itemView);
 
         FrameLayout actionsContainer = lookup(view, R.id.fl_actions_container);
+        Assert.notNull(actionsContainer, "View not found: fl_actions_container");
         actionsContainer.addView(actionsVH.itemView);
 
         view.requestLayout();
@@ -124,6 +130,8 @@ public abstract class ExpansionPanelsAdapter extends RecyclerView.Adapter
         private RecyclerView.ViewHolder mSummaryVH;
         private RecyclerView.ViewHolder mDetailsVH;
         private RecyclerView.ViewHolder mActionsVH;
+        private CardView mCardView;
+        private ImageView mExpandIcon;
         private ViewGroup mDetailsContainer, mActionsContainer;
         private View mDivider;
 
@@ -138,9 +146,16 @@ public abstract class ExpansionPanelsAdapter extends RecyclerView.Adapter
             mDetailsVH = detailsViewHolder;
             mActionsVH = actionsViewHolder;
 
+            mCardView = lookup(itemView, R.id.cv_expansion_panel);
+            Assert.notNull(mCardView, "View not found: cv_expansion_panel");
+            mExpandIcon = lookup(itemView, R.id.iv_expand_icon);
+            Assert.notNull(mExpandIcon, "View not found: iv_expand_icon");
             mDetailsContainer = lookup(itemView, R.id.fl_details_container);
+            Assert.notNull(mDetailsContainer, "View not found: fl_details_container");
             mDivider = lookup(itemView, R.id.view_divider);
+            Assert.notNull(mDivider, "View not found: view_divider");
             mActionsContainer = lookup(itemView, R.id.fl_actions_container);
+            Assert.notNull(mActionsContainer, "View not found: fl_actions_container");
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -164,11 +179,15 @@ public abstract class ExpansionPanelsAdapter extends RecyclerView.Adapter
             return mActionsVH;
         }
 
-        public ViewGroup getDetailsContainer() {
+        ImageView getExpandIcon() {
+            return mExpandIcon;
+        }
+
+        ViewGroup getDetailsContainer() {
             return mDetailsContainer;
         }
 
-        public ViewGroup getActionsContainer() {
+        ViewGroup getActionsContainer() {
             return mActionsContainer;
         }
 

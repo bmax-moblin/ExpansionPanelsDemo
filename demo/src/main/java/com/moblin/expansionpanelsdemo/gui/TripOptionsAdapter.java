@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.moblin.expansionpanelsdemo.R;
+import com.moblin.expansionpanelsdemo.util.Assert;
 
 @SuppressWarnings("WeakerAccess")
 public class TripOptionsAdapter extends ExpansionPanelsAdapter {
@@ -70,10 +71,11 @@ public class TripOptionsAdapter extends ExpansionPanelsAdapter {
     }
 
     private class SummaryViewHolder extends RecyclerView.ViewHolder {
-        TextView mTextView;
+        private TextView mTextView;
         SummaryViewHolder(View itemView) {
             super(itemView);
             mTextView = lookup(itemView, R.id.tv_main);
+            Assert.notNull(mTextView, "View not found: tv_main");
         }
         TextView getTextView() {
             return mTextView;
