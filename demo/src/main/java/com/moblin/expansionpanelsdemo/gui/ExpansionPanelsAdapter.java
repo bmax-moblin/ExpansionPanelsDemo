@@ -19,14 +19,17 @@ import com.moblin.expansionpanelsdemo.R;
 import com.moblin.expansionpanelsdemo.util.Assert;
 
 /**
- * TODO
+ * Adapter for RecyclerView, that displays material design expansion panels
+ * with customizable content. Subclasses should create and bind view-holders
+ * that supply panel's summary, details, and actions.
  */
 @SuppressWarnings("WeakerAccess")
 public abstract class ExpansionPanelsAdapter extends RecyclerView.Adapter
         <ExpansionPanelsAdapter.ViewHolder> {
 
     /**
-     * TODO
+     * Expansion panel's content is supplied by subclasses via
+     * view-holders of these types.
      */
     public enum ViewHolderType {
         SUMMARY, DETAILS, ACTIONS
@@ -129,16 +132,20 @@ public abstract class ExpansionPanelsAdapter extends RecyclerView.Adapter
         if (expanded) {
             if (position == 0) {
                 // First panel's top margin should be regular.
-                mlp.setMargins(mMarginCollapsed, mMarginCollapsed, mMarginCollapsed, mMarginExpanded);
+                mlp.setMargins(mMarginCollapsed, mMarginCollapsed,
+                        mMarginCollapsed, mMarginExpanded);
             } else {
-                mlp.setMargins(mMarginCollapsed, mMarginExpanded, mMarginCollapsed, mMarginExpanded);
+                mlp.setMargins(mMarginCollapsed, mMarginExpanded,
+                        mMarginCollapsed, mMarginExpanded);
             }
         } else {
             if (position == 0) {
                 // First panel's top margin should be regular.
-                mlp.setMargins(mMarginCollapsed, mMarginCollapsed, mMarginCollapsed, mMarginCollapsed);
+                mlp.setMargins(mMarginCollapsed, mMarginCollapsed,
+                        mMarginCollapsed, mMarginCollapsed);
             } else {
-                mlp.setMargins(mMarginCollapsed, 0, mMarginCollapsed, mMarginCollapsed);
+                mlp.setMargins(mMarginCollapsed, 0,
+                        mMarginCollapsed, mMarginCollapsed);
             }
         }
     }
