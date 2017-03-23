@@ -8,4 +8,11 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+
+
+    <style name="ExpansionRadioButton" parent="Widget.AppCompat.CompoundButton.RadioButton">
+        <item name="android:textColor">@color/radio_button_text</item>
+        <item name="android:textSize">@dimen/radio_button_text_size</item>
+    </style>
+
 </resources>

@@ -1,9 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ImageView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/iv_android_wide"
-    android:src="@drawable/andr"
+<RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:adjustViewBounds="true"
-    android:contentDescription="@string/android_wide_desc"/>
+    android:layout_marginTop="@dimen/radio_group_ver_margin"
+    android:layout_marginBottom="@dimen/radio_group_ver_margin">
+
+    <RadioButton
+        style="@style/ExpansionRadioButton"
+        android:id="@+id/rb_option_a"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/option_a" />
+
+    <RadioButton
+        style="@style/ExpansionRadioButton"
+        android:id="@+id/rb_option_b"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/option_b" />
+
+    <RadioButton
+        style="@style/ExpansionRadioButton"
+        android:id="@+id/rb_option_c"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/option_c" />
+
+</RadioGroup>

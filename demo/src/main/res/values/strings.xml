@@ -1,7 +1,50 @@
 <resources>
     <string name="app_name">Expansion Panels Demo</string>
     <string name="expand_icon_desc">Expand icon</string>
-    <string name="android_wide_desc">Wide image with text android</string>
+    <string name="option_a">Option A</string>
+    <string name="option_b">Option B</string>
+    <string name="option_c">Option C</string>
     <string name="action_save">Save</string>
     <string name="action_cancel">Cancel</string>
+    <string name="setting">Setting</string>
+    <string name="not_set">Not set</string>
+
+    <string-array name="settings">
+        <item>Trip name</item>
+        <item>Location</item>
+        <item>Duration</item>
+        <item>Carrier</item>
+        <item>Meal preferences</item>
+    </string-array>
+
+    <string-array name="trip_name_options">
+        <item>Caribbean cruise</item>
+        <item>Round the World</item>
+        <item>Space tour</item>
+    </string-array>
+
+    <string-array name="location_options">
+        <item>Barbados</item>
+        <item>Ein Gedi, Israel</item>
+        <item>Baikonur, Kazakhstan</item>
+    </string-array>
+
+    <string-array name="duration_options">
+        <item>One day long</item>
+        <item>Two weeks long</item>
+        <item>Three months long</item>
+    </string-array>
+
+    <string-array name="carrier_options">
+        <item>Cathay Pacific</item>
+        <item>EL AL Airlines</item>
+        <item>Kazakhstan Airlines</item>
+    </string-array>
+
+    <string-array name="meal_options">
+        <item>Vegetarian meal</item>
+        <item>Kosher meal </item>
+        <item>Liquid Diet meal</item>
+    </string-array>
+
 </resources>
