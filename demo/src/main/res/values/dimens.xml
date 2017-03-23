@@ -2,7 +2,8 @@
 <resources>
     <dimen name="rv_padding">12dp</dimen>
     <dimen name="label_text_size">15sp</dimen>
-    <dimen name="expansion_panel_margin">1dp</dimen>
+    <dimen name="expansion_panel_margin_collapsed">1dp</dimen>
+    <dimen name="expansion_panel_margin_expanded">16dp</dimen>
     <dimen name="expansion_panel_sum_container_mar_end">16dp</dimen>
     <dimen name="expansion_panel_sum_container_h_collapsed">48dp</dimen>
     <dimen name="expansion_panel_sum_container_h_expanded">64dp</dimen>
