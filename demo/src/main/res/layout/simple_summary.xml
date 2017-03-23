@@ -1,23 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/tv_setting"
         android:textSize="@dimen/label_text_size"
-        android:layout_width="0dp"
-        android:layout_weight="4"
+        android:textColor="@color/setting_text"
+        android:layout_width="@dimen/summary_setting_w"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:ellipsize="end"
         android:text="@string/setting"/>
 
     <TextView
         android:id="@+id/tv_value"
         android:textSize="@dimen/label_text_size"
-        android:layout_width="0dp"
-        android:layout_weight="6"
+        android:textColor="@color/setting_value_text"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/tv_setting"
+        android:layout_toEndOf="@+id/tv_setting"
+        android:layout_centerVertical="true"
+        android:ellipsize="end"
         android:text="@string/not_set"/>
 
-</LinearLayout>
+</RelativeLayout>

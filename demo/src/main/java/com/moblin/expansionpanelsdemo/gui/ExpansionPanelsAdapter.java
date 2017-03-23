@@ -7,7 +7,6 @@ import android.support.transition.Transition;
 import android.support.transition.TransitionManager;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,11 +79,7 @@ public abstract class ExpansionPanelsAdapter extends RecyclerView.Adapter
         // Embed the summary view.
         FrameLayout summaryContainer = lookup(view, R.id.fl_summary_container);
         Assert.notNull(summaryContainer, "View not found: fl_summary_container");
-        FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                Gravity.CENTER_VERTICAL);
-        summaryContainer.addView(summaryVH.itemView, lp);
+        summaryContainer.addView(summaryVH.itemView);
 
         // Embed the details view.
         FrameLayout detailsContainer = lookup(view, R.id.fl_details_container);

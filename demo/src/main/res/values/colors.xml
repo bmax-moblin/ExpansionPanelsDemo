@@ -4,5 +4,7 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="panel_divider">#DDDDDD</color>
-    <color name="radio_button_text">#8A8A8A</color>
+    <color name="radio_button_text">#888888</color>
+    <color name="setting_text">#222222</color>
+    <color name="setting_value_text">#888888</color>
 </resources>

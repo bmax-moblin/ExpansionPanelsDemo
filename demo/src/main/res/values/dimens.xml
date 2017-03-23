@@ -16,4 +16,6 @@
     <dimen name="expansion_panel_containers_m_end">24dp</dimen>
     <dimen name="expansion_panel_actions_container_m_bottom">16dp</dimen>
     <dimen name="radio_button_text_size">15sp</dimen>
+    <dimen name="summary_pad_top">12dp</dimen>
+    <dimen name="summary_setting_w">150dp</dimen>
 </resources>
