@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         Assert.notNull(rv, "View not found: rv_expandable_panels");
         rv.setNestedScrollingEnabled(false);
         rv.setLayoutManager(new LinearLayoutManager(this));
-        rv.setAdapter(new TripOptionsAdapter(rv));
+        rv.setAdapter(new TripOptionsAdapter(getResources(), rv));
     }
 
     private <T extends View> T lookup(@IdRes int viewId) {

@@ -1,5 +1,6 @@
 package com.moblin.expansionpanelsdemo.gui;
 
+import android.content.res.Resources;
 import android.support.annotation.IdRes;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,8 +17,8 @@ public class TripOptionsAdapter extends ExpansionPanelsAdapter {
             "Trip name", "Location", "Start and end dates", "Carrier", "Meal preferences"
     };
 
-    public TripOptionsAdapter(ViewGroup sceneRoot) {
-        super(sceneRoot);
+    public TripOptionsAdapter(Resources resources, ViewGroup sceneRoot) {
+        super(resources, sceneRoot);
     }
 
     @Override
