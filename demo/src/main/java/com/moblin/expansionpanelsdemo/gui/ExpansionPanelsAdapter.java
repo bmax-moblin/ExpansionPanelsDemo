@@ -1,5 +1,6 @@
 package com.moblin.expansionpanelsdemo.gui;
 
+import android.content.res.Resources;
 import android.support.annotation.IdRes;
 import android.support.transition.AutoTransition;
 import android.support.transition.Transition;
@@ -24,22 +25,27 @@ import com.moblin.expansionpanelsdemo.util.Assert;
 public abstract class ExpansionPanelsAdapter extends RecyclerView.Adapter
         <ExpansionPanelsAdapter.ViewHolder> {
 
+    /**
+     * TODO
+     */
     public enum ViewHolderType {
         SUMMARY, DETAILS, ACTIONS
     }
 
-    // TODO: use system's short animation duration
-    private static final long TRANSITION_DURATION = 100L;
     private ViewGroup mSceneRoot;
     private Transition mTransition;
-    private int mExpandedPosition = RecyclerView.NO_POSITION;
+    private int mMarginCollapsed, mMarginExpanded;
+    private long mTransitionDuration;
+    private int mExpandedPanelPos = RecyclerView.NO_POSITION;
 
     /**
      * Public constructor
-     * @param sceneRoot - scene's root-view
+     * @param resources - app resources
+     * @param sceneRoot - scene's root view
      */
-    public ExpansionPanelsAdapter(ViewGroup sceneRoot) {
+    public ExpansionPanelsAdapter(Resources resources, ViewGroup sceneRoot) {
         mSceneRoot = sceneRoot;
+        readResourceValues(resources);
         setupTransition();
     }
 
@@ -58,15 +64,15 @@ public abstract class ExpansionPanelsAdapter extends RecyclerView.Adapter
         View view = LayoutInflater.from(parent.getContext()).inflate(
                 R.layout.expansion_panel, parent, false);
 
+        // Create view-holders in the subclass.
         RecyclerView.ViewHolder summaryVH =
                 onCreateViewHolder(parent, viewType, ViewHolderType.SUMMARY);
-
         RecyclerView.ViewHolder detailsVH =
                 onCreateViewHolder(parent, viewType, ViewHolderType.DETAILS);
-
         RecyclerView.ViewHolder actionsVH =
                 onCreateViewHolder(parent, viewType, ViewHolderType.ACTIONS);
 
+        // Embed the summary view.
         FrameLayout summaryContainer = lookup(view, R.id.fl_summary_container);
         Assert.notNull(summaryContainer, "View not found: fl_summary_container");
         FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
@@ -75,20 +81,24 @@ public abstract class ExpansionPanelsAdapter extends RecyclerView.Adapter
                 Gravity.CENTER_VERTICAL);
         summaryContainer.addView(summaryVH.itemView, lp);
 
+        // Embed the details view.
         FrameLayout detailsContainer = lookup(view, R.id.fl_details_container);
         Assert.notNull(detailsContainer, "View not found: fl_details_container");
         detailsContainer.addView(detailsVH.itemView);
 
+        // Embed the actions view.
         FrameLayout actionsContainer = lookup(view, R.id.fl_actions_container);
         Assert.notNull(actionsContainer, "View not found: fl_actions_container");
         actionsContainer.addView(actionsVH.itemView);
 
+        // Remeasure the size
         view.requestLayout();
 
+        // Prepare it's own view-holder.
         return new ViewHolder(view, summaryVH, detailsVH, actionsVH,
                 new ItemClickListener() {
                     public void onItemClick(int position) {
-                        mExpandedPosition = (mExpandedPosition == position) ?
+                        mExpandedPanelPos = (mExpandedPanelPos == position) ?
                                 RecyclerView.NO_POSITION : position;
                         TransitionManager.beginDelayedTransition(mSceneRoot, mTransition);
                         notifyDataSetChanged();
@@ -99,22 +109,51 @@ public abstract class ExpansionPanelsAdapter extends RecyclerView.Adapter
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        // Bind view-holders in the subclass.
         onBindViewHolder(holder.getSummaryVH(), position, ViewHolderType.SUMMARY);
         onBindViewHolder(holder.getDetailsVH(), position, ViewHolderType.DETAILS);
         onBindViewHolder(holder.getActionsVH(), position, ViewHolderType.ACTIONS);
 
-        int visibility = (position == mExpandedPosition) ? View.VISIBLE : View.GONE;
+        boolean expanded = position == mExpandedPanelPos;
+
+        // Show the details and actions only in expanded panels.
+        int visibility = expanded ? View.VISIBLE : View.GONE;
         holder.getDetailsContainer().setVisibility(visibility);
         holder.getActionsContainer().setVisibility(visibility);
         holder.getDivider().setVisibility(visibility);
-        holder.getExpandIcon().setSelected(position == mExpandedPosition);
+        holder.getExpandIcon().setSelected(expanded);
+
+        // Set the margins according to state.
+        ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams)
+                holder.getCardView().getLayoutParams();
+        if (expanded) {
+            if (position == 0) {
+                // First panel's top margin should be regular.
+                mlp.setMargins(mMarginCollapsed, mMarginCollapsed, mMarginCollapsed, mMarginExpanded);
+            } else {
+                mlp.setMargins(mMarginCollapsed, mMarginExpanded, mMarginCollapsed, mMarginExpanded);
+            }
+        } else {
+            if (position == 0) {
+                // First panel's top margin should be regular.
+                mlp.setMargins(mMarginCollapsed, mMarginCollapsed, mMarginCollapsed, mMarginCollapsed);
+            } else {
+                mlp.setMargins(mMarginCollapsed, 0, mMarginCollapsed, mMarginCollapsed);
+            }
+        }
     }
 
     /** Private methods */
 
+    private void readResourceValues(Resources res) {
+        mMarginCollapsed = (int) res.getDimension(R.dimen.expansion_panel_margin_collapsed);
+        mMarginExpanded = (int) res.getDimension(R.dimen.expansion_panel_margin_expanded);
+        mTransitionDuration = res.getInteger(android.R.integer.config_shortAnimTime);
+    }
+
     private void setupTransition() {
         mTransition = new AutoTransition();
-        mTransition.setDuration(TRANSITION_DURATION);
+        mTransition.setDuration(mTransitionDuration);
         mTransition.setInterpolator(new AccelerateDecelerateInterpolator());
     }
 
@@ -178,6 +217,10 @@ public abstract class ExpansionPanelsAdapter extends RecyclerView.Adapter
 
         RecyclerView.ViewHolder getActionsVH() {
             return mActionsVH;
+        }
+
+        CardView getCardView() {
+            return mCardView;
         }
 
         ImageView getExpandIcon() {
