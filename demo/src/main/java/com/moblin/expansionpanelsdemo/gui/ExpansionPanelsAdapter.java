@@ -53,13 +53,35 @@ public abstract class ExpansionPanelsAdapter extends RecyclerView.Adapter
         setupTransition();
     }
 
-    /** Protected API */
+    /**
+     * Subclasses implement this method to supply view-holders of the given type.
+     * @param parent - parent layout
+     * @param viewType - view type
+     * @param holderType - view-holder type
+     * @param masterViewHolder - the master VH that hosts this VH (can used
+     *                         to get the adapter position)
+     * @return created view holder
+     */
+    protected abstract RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent,
+            int viewType, ViewHolderType holderType, ViewHolder masterViewHolder);
 
-    protected abstract RecyclerView.ViewHolder onCreateViewHolder(
-            ViewGroup parent, int viewType, ViewHolderType holderType);
-
+    /**
+     * Subclasses implement this method to bind view-holders of the given type.
+     * @param holder - view-holder to bind
+     * @param position - position in the data-set
+     * @param holderType - view-holder type
+     */
     protected abstract void onBindViewHolder(RecyclerView.ViewHolder holder,
                                              int position, ViewHolderType holderType);
+
+    /**
+     * Collapses all expansion panels.
+     */
+    protected void collapseAll() {
+        mExpandedPanelPos = RecyclerView.NO_POSITION;
+        TransitionManager.beginDelayedTransition(mSceneRoot, mTransition);
+        notifyDataSetChanged();
+    }
 
     /** Recycler View Adapter methods */
 
@@ -68,13 +90,28 @@ public abstract class ExpansionPanelsAdapter extends RecyclerView.Adapter
         View view = LayoutInflater.from(parent.getContext()).inflate(
                 R.layout.expansion_panel, parent, false);
 
+        ViewHolder holder = new ViewHolder(view, new ItemClickListener() {
+                    public void onItemClick(int position) {
+                        mExpandedPanelPos = (mExpandedPanelPos == position) ?
+                                RecyclerView.NO_POSITION : position;
+                        TransitionManager.beginDelayedTransition(mSceneRoot, mTransition);
+                        notifyDataSetChanged();
+                    }
+                }
+        );
+
         // Create view-holders in the subclass.
         RecyclerView.ViewHolder summaryVH =
-                onCreateViewHolder(parent, viewType, ViewHolderType.SUMMARY);
+                onCreateViewHolder(parent, viewType, ViewHolderType.SUMMARY, holder);
         RecyclerView.ViewHolder detailsVH =
-                onCreateViewHolder(parent, viewType, ViewHolderType.DETAILS);
+                onCreateViewHolder(parent, viewType, ViewHolderType.DETAILS, holder);
         RecyclerView.ViewHolder actionsVH =
-                onCreateViewHolder(parent, viewType, ViewHolderType.ACTIONS);
+                onCreateViewHolder(parent, viewType, ViewHolderType.ACTIONS, holder);
+
+        // Store them in the master view-holder for later.
+        holder.setSummaryVH(summaryVH);
+        holder.setDetailsVH(detailsVH);
+        holder.setActionsVH(actionsVH);
 
         // Embed the summary view.
         FrameLayout summaryContainer = lookup(view, R.id.fl_summary_container);
@@ -94,17 +131,7 @@ public abstract class ExpansionPanelsAdapter extends RecyclerView.Adapter
         // Remeasure the size
         view.requestLayout();
 
-        // Prepare it's own view-holder.
-        return new ViewHolder(view, summaryVH, detailsVH, actionsVH,
-                new ItemClickListener() {
-                    public void onItemClick(int position) {
-                        mExpandedPanelPos = (mExpandedPanelPos == position) ?
-                                RecyclerView.NO_POSITION : position;
-                        TransitionManager.beginDelayedTransition(mSceneRoot, mTransition);
-                        notifyDataSetChanged();
-                    }
-                }
-        );
+        return holder;
     }
 
     @Override
@@ -179,16 +206,8 @@ public abstract class ExpansionPanelsAdapter extends RecyclerView.Adapter
         private ViewGroup mDetailsContainer, mActionsContainer;
         private View mDivider;
 
-        ViewHolder(View itemView,
-                   RecyclerView.ViewHolder summaryViewHolder,
-                   RecyclerView.ViewHolder detailsViewHolder,
-                   RecyclerView.ViewHolder actionsViewHolder,
-                   final ItemClickListener clickListener) {
+        ViewHolder(View itemView, final ItemClickListener clickListener) {
             super(itemView);
-
-            mSummaryVH = summaryViewHolder;
-            mDetailsVH = detailsViewHolder;
-            mActionsVH = actionsViewHolder;
 
             mCardView = lookup(itemView, R.id.cv_expansion_panel);
             Assert.notNull(mCardView, "View not found: cv_expansion_panel");
@@ -209,6 +228,18 @@ public abstract class ExpansionPanelsAdapter extends RecyclerView.Adapter
                     }
                 }
             });
+        }
+
+        void setSummaryVH(RecyclerView.ViewHolder viewHolder) {
+            mSummaryVH = viewHolder;
+        }
+
+        void setDetailsVH(RecyclerView.ViewHolder viewHolder) {
+            mDetailsVH = viewHolder;
+        }
+
+        void setActionsVH(RecyclerView.ViewHolder viewHolder) {
+            mActionsVH = viewHolder;
         }
 
         RecyclerView.ViewHolder getSummaryVH() {
