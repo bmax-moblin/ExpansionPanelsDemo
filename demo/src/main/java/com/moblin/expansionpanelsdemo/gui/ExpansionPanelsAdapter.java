@@ -35,6 +35,7 @@ public abstract class ExpansionPanelsAdapter extends RecyclerView.Adapter
         SUMMARY, DETAILS, ACTIONS
     }
 
+    protected Resources mResources;
     private ViewGroup mSceneRoot;
     private Transition mTransition;
     private int mMarginCollapsed, mMarginExpanded;
@@ -47,6 +48,7 @@ public abstract class ExpansionPanelsAdapter extends RecyclerView.Adapter
      * @param sceneRoot - scene's root view
      */
     public ExpansionPanelsAdapter(Resources resources, ViewGroup sceneRoot) {
+        mResources = resources;
         mSceneRoot = sceneRoot;
         readResourceValues(resources);
         setupTransition();
